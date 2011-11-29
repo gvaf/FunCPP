@@ -2,7 +2,7 @@
 using namespace std;
 
 #include <funcpp/string.h>
-
+#include <regex>
 
 //-----------------------------------------------------------------
 void test_string_get_reverse()
@@ -64,6 +64,13 @@ void test_string_each_byte()
 
 //-----------------------------------------------------------------
 
+void test_reg_exp()
+{
+
+cout << endl;
+
+}
+
 
 int main()
 {
@@ -71,6 +78,7 @@ int main()
   test_string_each_byte();
 //  test_string_reverse();
   test_string_get_reverse();
+//  test_reg_exp();
 
  return 0;
 }

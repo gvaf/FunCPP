@@ -82,6 +82,7 @@ class String
   /// Return a new reversed string
   String get_reverse() const;
 
+
  private:
    std::string data;
 };
