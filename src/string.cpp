@@ -109,9 +109,9 @@ void String::reverse()
 String String::get_reverse() const
 {
   std::string rev;
-  auto n = data.size();
+  const int n = data.size();
 
-  for(auto i = n; i >= 0; --i)
+  for(int i = n-1; i >= 0; --i)
   rev.push_back(data[i]);
 
   return String(rev);

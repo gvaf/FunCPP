@@ -5,6 +5,17 @@ using namespace std;
 
 
 //-----------------------------------------------------------------
+void test_string_get_reverse()
+{
+ cout << "\nTest: testing string get reverse" << endl;
+
+ funcpp::String a = "Hello this is an apple";
+ funcpp::String r = a.get_reverse();
+
+ cout << "Reversed = " << r  << endl;
+}
+
+//-----------------------------------------------------------------
 
 void test_string_reverse()
 {
@@ -58,8 +69,8 @@ int main()
 {
   test_string_each_char();
   test_string_each_byte();
-  test_string_reverse();
-
+//  test_string_reverse();
+  test_string_get_reverse();
 
  return 0;
 }
