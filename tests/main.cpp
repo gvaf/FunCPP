@@ -10,7 +10,7 @@ void test_string_get_reverse()
  cout << "\nTest: testing string get reverse" << endl;
 
  funcpp::String a = "Hello this is an apple";
- funcpp::String r = a.get_reverse();
+ funcpp::String r = a.Reverse();
 
  cout << "Reversed = " << r  << endl;
 }
