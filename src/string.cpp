@@ -1,5 +1,5 @@
 /*
-   FunCPP Library 
+   FunCPP Library
    Copyright (C) 2012 by George Vafiadis
 
    Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -117,6 +117,72 @@ String String::Reverse() const
   return String(rev);
 }
 
+bool String::operator==(const funcpp::String & str) const
+{
+ return equals(str.data);
+}
+
+bool String::operator==(const std::string & str) const
+{
+ return equals(str);
+}
+
+bool String::operator==(const char * str) const
+{
+  return equals(std::string(str));
+}
+
+bool String::equals(const std::string & str) const
+{
+  return (this->data == str);
+}
+
+bool String::eql(const std::string & str) const
+{
+  return equals(str);
+}
+
+char & String::operator[](int index)
+{
+ if(index >= 0)
+  return this->data[index];
+ else
+  return this->data[this->data.size() - 1 - index];
+}
+
+const char & String::operator[](int index) const
+{
+ if(index >= 0)
+  return this->data[index];
+ else
+  return this->data[this->data.size() - 1 - index];
+}
+
+String String::operator()(int from, int to) const
+{
+  return "todo";
+}
+
+const char & String::operator()(int index) const
+{
+  return operator[](index);
+}
+
+String String::operator[](const range & r) const
+{
+ return "todo";
+}
+
+String String::operator*(int value) const
+{
+ std::string s;
+
+ for(int i = 0 ; i < value; ++i)
+   s.append(data);
+
+ return String(s);
+}
+
 namespace funcpp {
 std::ostream & operator<<(std::ostream & output, const funcpp::String & str)
 {
@@ -130,4 +196,7 @@ std::istream & operator>>(std::istream & input, funcpp::String & str)
   return input;
 }
 
+
+
 };
+

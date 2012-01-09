@@ -9,6 +9,59 @@ using namespace std;
 #include <pcrecpp.h>
 
 //-----------------------------------------------------------------
+void test_multiply()
+{
+ cout << "\nTest: multiply" << endl;
+
+ funcpp::String a= "hello";
+
+ cout << (a * 5) << endl;
+}
+
+//-----------------------------------------------------------------
+
+void test_string_elem_ref()
+{
+ cout << "\nTest: element reference[]" << endl;
+
+ funcpp::String a;
+
+ a = "hello how are you!!!";
+
+ cout << a << endl;
+
+ for(int i = 0; i < a.size(); ++i)
+   cout <<  a[i] << "_";
+
+ cout << endl;
+ for(int i = a.size()-1; i >= 0; --i)
+   cout <<  a[i] << "_";
+ cout << endl;
+
+ cout << a[funcpp::range(2,3)] << endl;
+ cout << a(2,3) << endl;
+}
+
+//-----------------------------------------------------------------
+
+void test_string_operator_concat()
+{
+ cout << "\nTest: operator<<" << endl;
+
+
+ funcpp::String a;
+
+ a.operator<<(1230);
+ a.operator<<(8888);
+ a.operator<<("hello");
+ a.operator<<(12.3);
+ a.operator<<('s');
+
+
+ cout << a << endl;
+}
+
+//-----------------------------------------------------------------
 void test_string_get_reverse()
 {
  cout << "\nTest: testing string get reverse" << endl;
@@ -147,7 +200,10 @@ int main()
 //  test_string_reverse();
   test_string_get_reverse();
   test_reg_exp();
+  test_string_operator_concat();
 
+  test_string_elem_ref();
+  test_multiply();
 
   //http://www.mushclient.com/pcre/pcrecpp.html
   // ndex(substring [, offset]) → fixnum or nil

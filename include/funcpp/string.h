@@ -24,10 +24,21 @@
 #define FUNCPP_LIBRRAY_STRING_H
 
 #include <string>
+#include <sstream>
 #include <iostream>
 #include <regex>
 
 namespace funcpp {
+
+struct range
+{
+  range(int from = 0, int to = 0) 
+   :  from(from), to(to)
+  {}
+
+  int from;
+  int to;
+};
 
 class String
 {
@@ -57,6 +68,28 @@ class String
   /// Overload stream operator for input
   friend std::istream & operator>>(std::istream & input, funcpp::String & str);
 
+  /// Concatenates the given value to str
+  template <class T> String & operator<<(const T & value);
+  template <class T> String & concat(const T & value);
+  template <class T> String & operator+(const T & value);
+
+  /// Element Reference
+  char & operator[](int index);
+  const char & operator[](int index) const;
+  String operator()(int from, int to) const;
+  const char & operator()(int index) const;
+  String operator[](const range & r) const;
+
+  /// Multiply string
+  String operator*(int value) const;
+
+  /// Compare Operator equality
+  inline bool operator==(const funcpp::String & str) const;
+  inline bool operator==(const std::string & str) const;
+  inline bool operator==(const char * str) const;
+  inline bool equals(const std::string & str) const;
+  inline bool eql(const std::string & str) const;
+
   /// Passes each character in str to the given block
   void each_char(Block_Char b) const;
 
@@ -85,6 +118,31 @@ class String
  private:
    std::string data;
 };
+
+
+template <class T>
+String & String::operator<<(const T & value)
+{
+  return concat(value);
+}
+
+template <class T>
+String & String::concat(const T & value)
+{
+ std::stringstream s;
+
+ s << value;
+
+ this->data.append(s.str());
+
+ return *this;
+}
+
+template <class T>
+String & String::operator+(const T & value)
+{
+ return concat<T>(value);
+}
 
 }; // end of namespace
 
