@@ -106,7 +106,7 @@ void String::reverse()
   }
 }
 
-String String::get_reverse() const
+String String::Reverse() const
 {
   std::string rev;
   const int n = data.size();

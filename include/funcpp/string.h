@@ -64,8 +64,8 @@ class String
   void each_byte(Block_Byte b) const;
 
   /// Returns the number of characters
-  int  size() const;
-  int  length() const;
+  int size() const;
+  int length() const;
 
   /// Returns true if the string is empty
   bool isEmpty() const;
@@ -80,8 +80,7 @@ class String
   void reverse();
 
   /// Return a new reversed string
-  String get_reverse() const;
-
+  String Reverse() const;
 
  private:
    std::string data;
