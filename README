@@ -1,8 +1,10 @@
-# FunCPP - A Fun(ctional) C++11 Library inspired by Ruby
+FunCPP - A Fun(ctional) C++11 Library inspired by Ruby
+==============================================================
 
 Caution: Under heavy development!
 
-## How to compile
+How to compile
+----------------
 It is recommended to use vagrant to install all dependencies. 
 The current gcc version used is *gcc version 4.8.1 (Ubuntu 4.8.1-2ubuntu1~12.04)*
 
@@ -15,7 +17,8 @@ The current gcc version used is *gcc version 4.8.1 (Ubuntu 4.8.1-2ubuntu1~12.04)
 	make
 	./runUnitTests
 
-# Example
+Example
+------------
 
 	funcpp::String a = "hello how are you";
 	a.each_char( [](char c) {
