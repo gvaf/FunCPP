@@ -1,24 +1,43 @@
 #include <iostream>
 using namespace std;
 
+#include <gtest/gtest.h>
 #include <funcpp/string.h>
 #include <string.h>
 #include <cstdio>
 #include <cstdlib>
-#include <pcre.h>
-#include <pcrecpp.h>
+#include  <string>
+//#include <pcre.h>
+//#include <pcrecpp.h>
 
-//-----------------------------------------------------------------
-void test_multiply()
+TEST(StringTest, StringLength) 
 {
- cout << "\nTest: multiply" << endl;
-
- funcpp::String a= "hello";
-
- cout << (a * 5) << endl;
+   funcpp::String s;
+   const char * text1 = "Hello this is a test";
+   s = text1;
+   EXPECT_EQ(strlen(text1), s.size());
+   EXPECT_EQ(strlen(text1), s.length());
 }
 
-//-----------------------------------------------------------------
+TEST(StringTest, StringMultiply)
+{
+  const char * text = "Hello";
+  funcpp::String s = text;
+  char buffer[1000];
+  int times = 5;
+
+  buffer[0] = 0;
+
+  for(int i = 0; i < times; ++i)
+    strcat(buffer, text);      
+  
+  s = s * times;
+ 
+  ASSERT_TRUE(strlen(buffer) == s.size());
+
+  for(int i = 0; i < strlen(buffer); ++i)
+    EXPECT_EQ(buffer[i], s[i]);
+}
 
 void test_string_elem_ref()
 {
@@ -123,6 +142,7 @@ void test_string_each_byte()
 
 #define OVECCOUNT 30  /* should be a multiple of 3 */
 
+/*
 void test_reg_exp()
 {
  pcre *re;
@@ -181,25 +201,26 @@ void test_reg_exp()
      return;
   }
 
- /*ovector[0]..ovector[1] are the entire matched string*/
+ //ovector[0]..ovector[1] are the entire matched string
  char *name_start = data + ovector[2];
  int name_length = ovector[3] - ovector[2];
  char *domain_start = data + ovector[4];
  int domain_length = ovector[5] - ovector[4];
 
- /* Finally, print the match */
+ // Finally, print the match 
  printf("Mail from: %.*s domain: %.*s\n", name_length, name_start, domain_length, domain_start);
 
 }
+*/
 
-
+/*
 int main()
 {
   test_string_each_char();
   test_string_each_byte();
 //  test_string_reverse();
   test_string_get_reverse();
-  test_reg_exp();
+  //test_reg_exp();
   test_string_operator_concat();
 
   test_string_elem_ref();
@@ -208,8 +229,9 @@ int main()
   //http://www.mushclient.com/pcre/pcrecpp.html
   // ndex(substring [, offset]) → fixnum or nil
   // index(regexp [, offset]) → fixnum or nil
-  pcrecpp::RE re("h.*o");
-  re.FullMatch("hello");
+  //pcrecpp::RE re("h.*o");
+  //re.FullMatch("hello");
 
  return 0;
 }
+*/

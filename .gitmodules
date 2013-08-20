@@ -1,0 +1,27 @@
+[submodule "cookbooks/apt"]
+	path = cookbooks/apt
+	url = https://github.com/opscode-cookbooks/apt.git
+[submodule "cookbooks/apache2"]
+	path = cookbooks/apache2
+	url = https://github.com/opscode-cookbooks/apache2.git
+[submodule "cookbooks/openssl"]
+	path = cookbooks/openssl
+	url = https://github.com/opscode-cookbooks/openssl.git
+[submodule "cookbooks/ntp"]
+	path = cookbooks/ntp
+	url = https://github.com/opscode-cookbooks/ntp
+[submodule "cookbooks/build-essential"]
+	path = cookbooks/build-essential
+	url = https://github.com/opscode-cookbooks/build-essential.git
+[submodule "cookbooks/git"]
+	path = cookbooks/git
+	url = https://github.com/opscode-cookbooks/git
+[submodule "cookbooks/emacs"]
+	path = cookbooks/emacs
+	url = https://github.com/opscode-cookbooks/emacs
+[submodule "cookbooks/boost"]
+	path = cookbooks/boost
+	url = https://github.com/opscode-cookbooks/boost
+[submodule "cookbooks/curl"]
+	path = cookbooks/curl
+	url = https://github.com/retr0h/cookbook-curl
