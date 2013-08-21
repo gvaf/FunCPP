@@ -1,6 +1,6 @@
 /*
    FunCPP Library
-   Copyright (C) 2012 by George Vafiadis
+   Developer: George Vafiadis
 
    Permission is hereby granted, free of charge, to any person obtaining a copy
    of this software and associated documentation files (the "Software"), to deal
@@ -59,9 +59,6 @@ class String
   /// Copy Constructor
   String(const String & other);
 
-  typedef void (*Block_Char)(char c);
-  typedef void (*Block_Byte)(int c);
-
   /// Overload stream operator for output
   friend std::ostream & operator<<(std::ostream & output, const funcpp::String & str);
 
@@ -91,10 +88,10 @@ class String
   inline bool eql(const std::string & str) const;
 
   /// Passes each character in str to the given block
-  void each_char(Block_Char b) const;
+  void each_char(std::function<void (char)> block) const;
 
   /// Passes each byte in str to the given block
-  void each_byte(Block_Byte b) const;
+  void each_byte(std::function<void (int)> block) const;
 
   /// Returns the number of characters
   int size() const;

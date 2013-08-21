@@ -1,6 +1,6 @@
 /*
    FunCPP Library
-   Copyright (C) 2012 by George Vafiadis
+   Developer: George Vafiadis
 
    Permission is hereby granted, free of charge, to any person obtaining a copy
    of this software and associated documentation files (the "Software"), to deal
@@ -57,20 +57,20 @@ int String::size() const
 int String::length() const
 { return data.size(); }
 
-void String::each_char(Block_Char b) const
+void String::each_char(std::function<void (char)> block) const
 {
-  const int size = data.size();
+ const int size = data.size();
 
   for(int i = 0; i < size; ++i)
-        b(data[i]);
+        block(data[i]);
 }
 
-void String::each_byte(Block_Byte b) const
+void String::each_byte(std::function<void (int)> block) const
 {
   const int size = data.size();
 
   for(int i = 0; i < size; ++i)
-        b((int)data[i]);
+        block( (int)data[i] );
 }
 
 String & String::operator=(const char * str)
@@ -160,7 +160,12 @@ const char & String::operator[](int index) const
 
 String String::operator()(int from, int to) const
 {
-  return "todo";
+  const int & size = data.size();
+
+  if( from < 0 || to < 0 || from >= size || to >= size || from > to)
+      return "";  
+  
+  return data.substr(from, to - from + 1);
 }
 
 const char & String::operator()(int index) const
@@ -170,7 +175,7 @@ const char & String::operator()(int index) const
 
 String String::operator[](const range & r) const
 {
- return "todo";
+ return operator()(r.from, r.to);
 }
 
 String String::operator*(int value) const

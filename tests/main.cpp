@@ -1,14 +1,34 @@
+/*
+   FunCPP Library
+   Developer: George Vafiadis
+
+   Permission is hereby granted, free of charge, to any person obtaining a copy
+   of this software and associated documentation files (the "Software"), to deal
+   in the Software without restriction, including without limitation the rights
+   to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+   copies of the Software, and to permit persons to whom the Software is
+   furnished to do so, subject to the following conditions:
+
+   The above copyright notice and this permission notice shall be included in
+   all copies or substantial portions of the Software.
+
+   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+   FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+   THE SOFTWARE.
+*/
+
 #include <iostream>
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
 using namespace std;
 
 #include <gtest/gtest.h>
 #include <funcpp/string.h>
-#include <string.h>
-#include <cstdio>
-#include <cstdlib>
-#include  <string>
-//#include <pcre.h>
-//#include <pcrecpp.h>
 
 TEST(StringTest, StringLength) 
 {
@@ -39,199 +59,109 @@ TEST(StringTest, StringMultiply)
     EXPECT_EQ(buffer[i], s[i]);
 }
 
-void test_string_elem_ref()
+TEST(StringTest, StringElementReference)
 {
- cout << "\nTest: element reference[]" << endl;
-
  funcpp::String a;
+ const char * s = "hello how are you!!!";
 
- a = "hello how are you!!!";
+ a = s;
 
- cout << a << endl;
+ASSERT_TRUE(strlen(s) == a.size());
 
- for(int i = 0; i < a.size(); ++i)
-   cout <<  a[i] << "_";
-
- cout << endl;
- for(int i = a.size()-1; i >= 0; --i)
-   cout <<  a[i] << "_";
- cout << endl;
-
- cout << a[funcpp::range(2,3)] << endl;
- cout << a(2,3) << endl;
+for(int i = 0; i < a.size(); ++i)
+  EXPECT_EQ(s[i], a[i]); 
 }
 
-//-----------------------------------------------------------------
-
-void test_string_operator_concat()
+TEST(StringTest, StringRange)
 {
- cout << "\nTest: operator<<" << endl;
+ funcpp::String a    = "My Funny Test";
+ funcpp::String sub  = a[funcpp::range(3,7)];
+ funcpp::String sub1 = a(3,7);
 
+ for(int i = 3, k = 0; i <= 7; ++i, ++k)
+   EXPECT_EQ(a[i], sub[k]);
 
- funcpp::String a;
+ ASSERT_TRUE( sub.size() == sub1.size() );
 
- a.operator<<(1230);
- a.operator<<(8888);
- a.operator<<("hello");
- a.operator<<(12.3);
- a.operator<<('s');
-
-
- cout << a << endl;
+ for(int i = 0; i < sub.size(); ++i)
+   EXPECT_EQ(sub[i], sub1[i]);
 }
 
-//-----------------------------------------------------------------
-void test_string_get_reverse()
+TEST(StringTest, StringConcat)
 {
- cout << "\nTest: testing string get reverse" << endl;
+  funcpp::String a;
+  funcpp::String b = "Last Section";
+  const char * text = "1230 3.14159 Hello Last Section!";
 
+  a << 1230 << " " << 3.14159 << " Hello " << b <<  '!';
+
+  ASSERT_TRUE(strlen(text) == a.size());
+
+  for(int i = 0; i < strlen(text); ++i)
+    EXPECT_EQ( a[i], text[i] );
+}
+
+TEST(StringTest, StringReverse)
+{
  funcpp::String a = "Hello this is an apple";
  funcpp::String r = a.Reverse();
 
- cout << "Reversed = " << r  << endl;
+ ASSERT_TRUE(a.size() == r.size());
+
+ for(int i = 0; i < a.size(); ++i)
+   EXPECT_EQ( a[i], r[r.size() - i - 1] );
+
+ a = "";
+ r = a.Reverse();
+
+ EXPECT_EQ(r.size(), 0);
 }
 
-//-----------------------------------------------------------------
-
-void test_string_reverse()
+TEST(StringTest, StringReverseInPlace)
 {
- cout << "\nTest: testing string reverse in place" << endl;
-
- funcpp::String a;
-
- cout << "Enter string = ";
- cin >> a;
-
+ const char * text = "Hello this is an apple";
+ const int textSize = strlen(text);
+ funcpp::String a = text;
  a.reverse();
 
- cout << "Reversed string : " << a << endl;
+ ASSERT_TRUE(a.size() == textSize);
 
+ for(int i = 0; i < textSize; ++i)
+   EXPECT_EQ( a[i], text[textSize - i - 1] );
 }
 
-//-----------------------------------------------------------------
-
-void test_string_each_char()
+TEST(StringTest, StringEachChar)
 {
-  cout << "\nTest: Testing each_char() method call" << endl;
+  const char * text = "hello how are you";
+  char * s = (char *)text;
+  funcpp::String a = text;
 
-  funcpp::String a = "hello how are you";
-
-  a.each_char( [](char c) {
-     cout << c << "_";
+  a.each_char( [&](char c) {
+    EXPECT_EQ( c, *(s++) ); 
   } );
 
- cout << endl;
+  a = "";
+
+  a.each_char( [](char c) {
+   ASSERT_TRUE(false);
+  } );
 }
 
-//-----------------------------------------------------------------
-
-void test_string_each_byte()
+TEST(StringTest, StringEachByte) 
 {
-  cout << "\nTest: Testing each_byte() method call" << endl;
+  const char * text = "hello how are you";
+  char * s = (char *)text;
+  funcpp::String a = text;
 
-  funcpp::String a = "hello how are you";
+  a.each_char( [&](int c) {
+    EXPECT_EQ( c, (int)*(s++) ); 
+  } );
 
-  a.each_byte( [](int d) {
-   cout << d << ", ";
- });
+  a = "";
 
- cout << endl;
-}
-
-//-----------------------------------------------------------------
-
-#define OVECCOUNT 30  /* should be a multiple of 3 */
-
-/*
-void test_reg_exp()
-{
- pcre *re;
- const char *error;
- int erroffset;
- int ovector[OVECCOUNT];
- int rc;
-
- char *regex = "^From: ([^@]+)@([^\r]+)";
- char *data = "From: gvaf@example.com\r\n";
-
- re = pcre_compile(
-  regex,     // the pattern
-  0,           // default options
-  &error,      // for error message
-  &erroffset,  // error offset
-  NULL);      // Default character table
-
- cout << endl;
-
- if (! re)
- {
-   cout << "PCRE compilation failed at expression " <<  erroffset << ": " <<  error << endl;;
-    return;
- }
-
- rc = pcre_exec(
-  re,               // the compiled pattern
-  NULL,            // no extra data
-  data,           // the subject string
-  strlen(data),    // the length of the subject
-  0,               // start offset 0 in the subject
-  0,               // default options
-  ovector,         // output vector for substring information
-  OVECCOUNT);        // number of elements in the output
-
-
- if(rc < 0)
-  {
-    switch(rc)
-     {
-        case PCRE_ERROR_NOMATCH:
-             printf("No match found in text\n");
-             break;
-        default:
-             printf("Match error %d\n", rc);
-             break;
-             return;
-     };
-  }
-
-
- if(rc < 3)
-  {
-     printf("Match did not catch all the groups\n");
-     return;
-  }
-
- //ovector[0]..ovector[1] are the entire matched string
- char *name_start = data + ovector[2];
- int name_length = ovector[3] - ovector[2];
- char *domain_start = data + ovector[4];
- int domain_length = ovector[5] - ovector[4];
-
- // Finally, print the match 
- printf("Mail from: %.*s domain: %.*s\n", name_length, name_start, domain_length, domain_start);
+  a.each_char( [](int c) {
+   ASSERT_TRUE(false);
+  } );
 
 }
-*/
 
-/*
-int main()
-{
-  test_string_each_char();
-  test_string_each_byte();
-//  test_string_reverse();
-  test_string_get_reverse();
-  //test_reg_exp();
-  test_string_operator_concat();
-
-  test_string_elem_ref();
-  test_multiply();
-
-  //http://www.mushclient.com/pcre/pcrecpp.html
-  // ndex(substring [, offset]) → fixnum or nil
-  // index(regexp [, offset]) → fixnum or nil
-  //pcrecpp::RE re("h.*o");
-  //re.FullMatch("hello");
-
- return 0;
-}
-*/
