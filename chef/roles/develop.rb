@@ -16,7 +16,7 @@ run_list(
     "recipe[ntp]",
     "recipe[zip]",
     "recipe[curl]",
-    "recipe[gcc11]",
-    "recipe[boost]",
-    "recipe[boost::source]"
+    "recipe[gcc11]"
+#    "recipe[boost]",
+#    "recipe[boost::source]"
 )

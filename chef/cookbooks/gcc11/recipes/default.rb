@@ -12,5 +12,6 @@ bash "install_gcc" do
   apt-get install g++-4.8  -y
   update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.8 20
   update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.8 20
+  apt-get install libboost1.48-all-dev -y
   EOH
 end

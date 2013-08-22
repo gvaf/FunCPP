@@ -136,7 +136,10 @@ TEST(StringTest, StringEachChar)
   char * s = (char *)text;
   funcpp::String a = text;
 
+  ASSERT_TRUE( strlen(text) == a.size() );
+
   a.each_char( [&](char c) {
+    ASSERT_TRUE( *s );
     EXPECT_EQ( c, *(s++) ); 
   } );
 
