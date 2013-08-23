@@ -22,6 +22,7 @@
 */
 
 #include <funcpp/string.h>
+#include <ctype.h>
 using namespace funcpp;
 
 String::String(const String & other)
@@ -51,6 +52,11 @@ String::~String()
 
 }
 
+String::String(String && other)
+{
+  this->data = other.data;
+}
+
 int String::size() const
 { return data.size(); }
 
@@ -73,6 +79,12 @@ void String::each_byte(std::function<void (int)> block) const
         block( (int)data[i] );
 }
 
+String & String::operator=(const String && str)
+{
+  this->data = str.data;
+  return *this;
+}
+
 String & String::operator=(const char * str)
 {
   data = str;
@@ -84,7 +96,6 @@ String & String::operator=(const std::string & str)
   data = str;
   return *this;
 }
-
 
 bool String::isEmpty() const
 {
@@ -104,6 +115,31 @@ void String::reverse()
     first = last;
     last = c;
   }
+}
+
+String String::Capitalize() const
+{
+  const int size = data.size();
+  String s;
+
+  if( size >= 1 )
+    s << (char)toupper( data[0] );
+
+  for(int i = 1; i < size; ++i)
+    s << (char)tolower( data[i] );
+
+  return s;
+}
+
+void String::capitalize()
+{
+  const int size = data.size();
+
+  if( size >= 1 )
+    data[0] = toupper(data[0]);
+
+  for(int i = 1; i < size; ++i)      
+     data[i] = tolower(data[i]);   
 }
 
 String String::Reverse() const

@@ -59,6 +59,15 @@ class String
   /// Copy Constructor
   String(const String & other);
 
+  /// Move Constructor
+  String(String && other);
+  
+  /// Returns a copy of string with the first character converted to uppercase and the remainder to lowercase
+  String Capitalize() const;
+
+  /// Modifies string by converting the first character to uppercase and the remainder to lowercase. 
+  void capitalize();
+
   /// Overload stream operator for output
   friend std::ostream & operator<<(std::ostream & output, const funcpp::String & str);
 
@@ -102,6 +111,9 @@ class String
 
   /// Assignment operator with C style string
   String & operator=(const char * str);
+
+  /// Assignment oeprator with funcpp::String
+  String & operator=(const String && str);
 
   /// Assignment operator with standard string
   String & operator=(const std::string & str);

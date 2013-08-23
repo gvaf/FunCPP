@@ -25,6 +25,7 @@
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
+#include <ctype.h>
 using namespace std;
 
 #include <gtest/gtest.h>
@@ -165,6 +166,43 @@ TEST(StringTest, StringEachByte)
   a.each_char( [](int c) {
    ASSERT_TRUE(false);
   } );
-
 }
 
+TEST(StringTest, StringCapitalizeInPlace)
+{
+  char text[100];
+
+  strcpy(text, "hELLO");
+
+  funcpp::String a = text;
+
+  ASSERT_TRUE( strlen(text) == a.size() );
+
+  a.capitalize();
+
+  EXPECT_EQ(a[0], toupper(text[0]));
+
+  for(int i = 1; i < strlen(text); ++i)
+    EXPECT_EQ(a[i], tolower(text[i]) );
+}
+
+TEST(StringTest, StringCapitalize)
+{
+  char text[100];
+
+  strcpy(text, "hELLO");
+
+  funcpp::String a = text;
+  funcpp::String b = a.Capitalize();
+
+  ASSERT_TRUE( b.size() == a.size() );
+
+  EXPECT_EQ(b[0], toupper(text[0]));
+  EXPECT_EQ(a[0], text[0]);
+
+  for(int i = 1; i < strlen(text); ++i)
+  {
+    EXPECT_EQ(b[i], tolower(text[i]));
+    EXPECT_EQ(a[i], text[i]);
+  }  
+}

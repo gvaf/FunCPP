@@ -12,11 +12,12 @@ option(test "Build all tests." OFF) # makes boolean 'test' available
 set(CMAKE_FIND_LIBRARY_PREFIXES lib)
 set(Boost_MULTITHREADED ON)
 set(Boost_USE_STATIC_LIBS ON)
+set(Boost_USE_STATIC_RUNTIME ON)
 
 set(BOOST_INCLUDEDIR /usr/include/)
 set(BOOST_LIBRARYDIR /usr/lib)
 
-find_package( Boost REQUIRED COMPONENTS filesystem regex )
+find_package( Boost REQUIRED COMPONENTS filesystem program_options thread  system regex)
 INCLUDE_DIRECTORIES( ${Boost_INCLUDE_DIR} )
 
 project(funcpp)
@@ -46,7 +47,8 @@ if (test)
         # extra linking for the project
         target_link_libraries(runUnitTests funcpp)
 
-        target_link_libraries(runUnitTests ${Boost_LIBRARIES})
+        target_link_libraries(runUnitTests -lboost_regex) # FIXME
+#        target_link_libraries(runUnitTests ${Boost_LIBRARIES})
 
         # This is so you can do 'make test' to see all your tests run, instead of manua$
         add_test(NAME that-test-I-made COMMAND runUnitTests)

@@ -60,6 +60,33 @@ TEST(REGEX_BOOST, MatchCharacters)
  ASSERT_FALSE( regex_match("sdsd$dfdfd", re) );
 }
 
+TEST(REGEX_BOOST, FindPosString)
+{
+  std::string s = "Hello my name is George and I am 30 and born at 1983";
+  boost::regex re("[0-9]+");
+  boost::match_results<std::string::const_iterator> results;
 
-// TODO: http://www.boost.org/doc/libs/1_46_1/libs/regex/doc/html/boost_regex/ref.html
+  ASSERT_TRUE(boost::regex_search(s, results, re));  
+  
+  for (unsigned i=0; i< results.size(); ++i) 
+  {
+    std::cout << "match " << i << ": " << results[i] << "  at ";
+    std::cout << results.position() << " (with a length of " << results[i].length() << ")\n";
+  }
+}
 
+void index(boost::regex & re, const std::string & input)
+{
+    boost::match_results<std::string::const_iterator> what;
+    boost::match_flag_type flags = boost::match_default;
+    std::string::const_iterator s = input.begin();
+    std::string::const_iterator e = input.end();
+
+    while( boost::regex_search(s,e,what,re,flags) )
+    {
+        std::cout << what.position() << std::endl;
+        std::string::difference_type l = what.length();
+        std::string::difference_type p = what.position();
+        s += p + l;
+    }
+}
